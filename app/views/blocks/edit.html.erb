@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+<script>
+tinymce.init({
+  selector: '#mytextarea'
+});
+</script>
+</head>
+
+<body>
+<h1>Edit <%= @block.name %></h1>
+<form action='' method='post'>
+<input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
+<input type = 'hidden' name ="block[user_id]" value ='<%= current_user.id %>'>
+Title: <input type = 'text' name ="block[name]" value='<%= @block.name %>'>
+Description: <input type = 'text' name ="block[description]" value='<%= @block.description %>'>
+Type of Content <select name="block[kind]">
+<option value='Recipe'>Recipe</option>
+<option value='Note'>Note</option>
+<option value='Timeline'>Timeline</option>
+</select>
+<label>Include this content on pages: </label>
+<select multiple name='block[page_id][]'>
+  <% @pages.each do |page| %>
+    <% if @selectedpages.include? page %>
+    <option selected value='<%= page.id %>'><%= page.name %></option>
+    <% else %>
+    <option value='<%= page.id %>'><%= page.name %></option>
+    <% end %>
+  <% end %>
+</select>
+<textarea id="mytextarea" name='block[body]'><%= sanitize @block.body %></textarea>
+<input type ='submit' value="Update">
+</form>
+</body>
+</html>

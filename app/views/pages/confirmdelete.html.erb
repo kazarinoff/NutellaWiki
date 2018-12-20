@@ -1,0 +1,5 @@
+<h1>Are you sure you want to delete <%= @page.name %>? This action cannot be undone</h1>
+<form method='post' action:''>
+<input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
+<input type='submit' value='YES'>
+<button onclick="/page/@page.id">NO</button>

@@ -1,0 +1,32 @@
+<h1>The <%= @user.clan.name%> Family Wiki</h1>
+<h2>Table of Contents</h2>
+<ul>
+<% @pages.each do |page| %>
+<div>
+<li><%= link_to page.name, show_page_path(page) %> (<%= page.genre %>)</li>
+Description: <%= page.description %>
+<% unless (page.blocks==[]) %>
+<ul>
+<% page.blocks.each do |block| %>
+    <li><%= link_to block.name, show_block_path(block) %></li>
+<% end %>
+</ul>
+<% end %>
+<%= link_to 'Add content to this page', new_block_path(page) %>
+</div>
+<% end %>
+</ul>
+
+<h3>Create a new Page</h3>
+<form action='/pages/create' method='post'>
+<input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
+<input type = 'hidden' name ="page[user_id]" value ='<%= @user.id %>'>
+Page Name: <input type = 'text' name ="page[name]">
+Type of Page <select name="page[genre]">
+<option value='Recipe_Chapter'>Recipe Only</option>
+<option value='Vacation'>Vacation</option>
+<option value='Misc'>Other</option>
+</select>
+Description: <input type ='text' name ="page[description]">
+<input type ='submit' value="CREATE PAGE">
+</form>
