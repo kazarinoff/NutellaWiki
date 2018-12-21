@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'users#new'
   get '/login', :to => 'users#new', as:'login'
   post '/login', :to => 'sessions#create'
@@ -14,9 +15,9 @@ Rails.application.routes.draw do
   get 'pages/:id/delete' => 'pages#confirmdelete', as:'confirm_delete_page'
   post 'pages/:id/delete' => 'pages#destroy', as:'delete_page'
 
-  get 'users/:id' => 'users#show', as:'show_user'
-  get 'users/:id/edit' => 'users#edit', as:'edit_user'
-  post 'users/create' => 'users#create', as:'create_user'
+  get 'users/:id' => 'users#show'
+  get 'users/:id/edit' => 'users#edit'
+  post 'users/create' => 'users#create'
 
   get 'blocks/new' => 'blocks#new', as:'new_block'
   post 'blocks/create' => 'blocks#create', as:'create_block'

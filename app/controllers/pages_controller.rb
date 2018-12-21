@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   def index
     @pages=Page.all.includes(:blocks)
     @user=current_user
+    puts ENV['MAIL_HOST'],'########################'
   end
 
   def show
