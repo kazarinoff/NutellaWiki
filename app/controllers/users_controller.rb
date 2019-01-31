@@ -21,9 +21,15 @@ class UsersController < ApplicationController
   
   def show
     redirect_to show_user_path(current_user) and return if params['id']!=current_user.id.to_s
+    @user = current_user
+    @pages = @user.pages
+    @blocks =@user.blocks
   end
   
   def edit
+    redirect_to edit_user_path(current_user) and return if params['id']!=current_user.id.to_s
+    @user = current_user
+
   end
 
   def update

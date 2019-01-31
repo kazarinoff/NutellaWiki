@@ -4,13 +4,18 @@
   <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
   <script>
   tinymce.init({
-    selector: '#mytextarea'
+    selector: '#mytextarea',
+    plugins:"textcolor lists link",
+    height: 300,
+    toolbar: 'bold italic underline forecolor backcolor  bullist numlist link',
+    browser_spellcheck: true
   });
   </script>
 </head>
 
 <body>
 <h1>Add Content</h1>
+<p class='text-warning'><em>if full editor does not appear below, please reload page</em></p>
 <form action='/blocks/create' method='post'>
 <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
 <input type = 'hidden' name ="block[user_id]" value ='<%= current_user.id %>'>
@@ -20,6 +25,8 @@ Type of Content <select name="block[kind]">
 <option value='Recipe'>Recipe</option>
 <option value='Note'>Note</option>
 <option value='Timeline'>Timeline</option>
+<option value='Info'>Info</option>
+<option value='Other'>Other</option>
 </select>
 <label>Include this content on pages: </label>
 <select multiple name='block[page_id][]'>
@@ -31,9 +38,9 @@ Type of Content <select name="block[kind]">
     <% end %>
   <% end %>
 </select>
-
+<br>
 <textarea id="mytextarea" name='block[body]'></textarea>
-<input type ='submit' value="Add Content">
+<input type ='submit' class='btn btn-primary' value="Add Content">
 </form>
 </body>
 </html>

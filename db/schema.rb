@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181221191215) do
+ActiveRecord::Schema.define(version: 20190130203617) do
 
   create_table "blocks", force: :cascade do |t|
-    t.string  "name"
-    t.string  "kind"
-    t.integer "user_id"
-    t.text    "body"
-    t.string  "description"
+    t.string   "name"
+    t.string   "description"
+    t.text     "body"
+    t.string   "kind"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id"
@@ -30,44 +32,46 @@ ActiveRecord::Schema.define(version: 20181221191215) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "block_id"
-    t.text    "body"
+    t.text     "body"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "block_id"
   end
 
   add_index "comments", ["block_id"], name: "index_comments_on_block_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "displays", force: :cascade do |t|
-    t.integer "page_id"
-    t.integer "block_id"
+    t.integer  "page_id"
+    t.integer  "block_id"
+    t.integer  "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "displays", ["block_id"], name: "index_displays_on_block_id"
   add_index "displays", ["page_id"], name: "index_displays_on_page_id"
 
   create_table "pages", force: :cascade do |t|
-    t.string  "name"
-    t.string  "description"
-    t.integer "user_id"
-    t.string  "genre"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "description"
   end
 
   add_index "pages", ["user_id"], name: "index_pages_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.integer  "clan_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["clan_id"], name: "index_users_on_clan_id"
 
 end

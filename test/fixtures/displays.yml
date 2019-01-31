@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  block_id: 
   page_id: 
+  block_id: 
+  order: 1
 
 two:
-  block_id: 
   page_id: 
+  block_id: 
+  order: 1

@@ -1,31 +1,42 @@
-<h1><%= @block.name %> (<%= @block.kind %>)</h1>
-<p>Description: <%= @block.description %><p>
-<%= (sanitize @block.body) %>
-<% if (@comments!= []) %>
-<h5>Comments: </h5>
-<% @comments.each do |comment| %>
-    <div>
-    <p><%= (comment.created_at).strftime("%m/%d/%Y") %>: <%= comment.user.name %> said</p>
-    <p><%= comment.body %></p>
-    <% if (comment.user==current_user) %>
-    <form method='post' action:''>
-    <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
-    <input type = 'hidden' name'_method' value='DELETE'>
-    <input type = 'hidden' name ='comment[id]' value='<%= comment.id %>'>
-    <input type='submit' value='Delete'>
-    <% end %>
-        </div>
-    <% end %>
-<% end %>
-<form action='/comments/create' method='post'>
-<input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
-<input type = 'hidden' name ="comment[user_id]" value ='<%= current_user.id %>'>
-<input type = 'hidden' name ="comment[block_id]" value ='<%= @block.id %>'>
-<textarea name="comment[body]"></textarea>
-<input type ='submit' value="Comment">
-</form>
+<div class='row'>
+    <div class='col-9'>
+        <div class='card border-primary'>
+            <h1 class='card-header'><%= @block.name %></h1>
+            <h3 class='card-header'><%= @block.kind %>, written by <%= @block.user.name %></h3>
+            <p class='card-body'>Description: <%= @block.description %><p>
+            <div class='card-body'><%= (sanitize @block.body) %></div>
+            <% if (@block.user==current_user) %>
+            <p class='card-footer'><%= link_to 'Edit Content', edit_block_path(@block), :class =>'text-danger' %>  |
+            <%= link_to 'Delete Content', confirm_delete_block_path(@block), :class =>'text-danger' %></p>
+        <% end %>
+                </div>
+        <p class='text-secondary'><em>This is included on: <% @block.pages.each do |page| %><%= link_to page.name, show_page_path(page) %>, <% end %></em></p>
+    </div>
+    <div class='col-3'>
+        <% if (@comments!= []) %>
+            <% @comments.each do |comment| %>
+                <div class='card border-primary mb-3'>
+                    <p class='text-muted card-header'><%= (comment.created_at).strftime("%m/%d/%Y") %>: <%= comment.user.name %> said</p>
+                    <p class='card-body'><%= comment.body %></p>
+                    <% if (comment.user==current_user) %>
+                        <form method='post' action='/comments/delete/'>
+                            <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
+                            <input type = 'hidden' name ='_method' value='DELETE'>
+                            <input type = 'hidden' name ='comment[id]' value='<%= comment.id %>'>
+                            <input class='btn btn-danger' type='submit' value='Delete'>
+                        </form>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
+        <form action='/comments/create' method='post'>
+            <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
+            <input type = 'hidden' name ="comment[user_id]" value ='<%= current_user.id %>'>
+            <input type = 'hidden' name ="comment[block_id]" value ='<%= @block.id %>'>
+            <textarea rows='4' cols='42' name="comment[body]"></textarea>
+            <br>
+            <input type ='submit' class = 'btn btn-primary' value="Comment">
+        </form>
+    </div>
+</div>
 
-<% if (@block.user==current_user) %>
-<h3><%= link_to 'Edit Content', edit_block_path(@block) %></h3>
-<h3><%= link_to 'Delete Content', confirm_delete_block_path(@block) %></h3>
-<% end %>

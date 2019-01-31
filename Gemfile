@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-gem 'devise'
-gem 'omniauth'
+# gem 'devise'
+# gem 'omniauth'
 gem 'tinymce-rails'
 gem 'rails-footnotes', '>= 4.0.0', '<5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

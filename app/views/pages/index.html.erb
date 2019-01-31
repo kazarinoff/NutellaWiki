@@ -1,32 +1,37 @@
 <h1>The <%= @user.clan.name%> Family Wiki</h1>
-<h2>Table of Contents</h2>
-<ul>
-<% @pages.each do |page| %>
-<div>
-<li><%= link_to page.name, show_page_path(page) %> (<%= page.genre %>)</li>
-Description: <%= page.description %>
-<% unless (page.blocks==[]) %>
-<ul>
-<% page.blocks.each do |block| %>
-    <li><%= link_to block.name, show_block_path(block) %></li>
-<% end %>
-</ul>
-<% end %>
-<%= link_to 'Add content to this page', new_block_path(page) %>
+<div class='row'>
+    <% @pages.each do |page| %>
+        <div class='col-sm-2'>
+            <div class='card mb-3 border-info'>
+                <h3 class='card-header'><%= link_to page.name, show_page_path(page) %></h3>
+                <div class='card-body'>
+                    <h5 class'card-title'><em><%= page.description %></em></h5>
+                </div>
+                <% unless (page.blocks==[]) %>
+                <div class='card-body'>
+                    <ul class='list-group list-group-flush'>
+                        <% page.blocks.each do |block| %>
+                        <li class='list-group-item'><%= link_to block.name, show_block_path(block) %>- <%= block.kind %></li>
+                        <% end %>
+                    </ul>
+                </div>
+                <% end %>
+                <div class='card-footer'><%= link_to 'Add content to this page', new_block_path(page), :class =>'text-info' %></div>
+                <% if (page.user==current_user) %>
+                    <p class='card-footer'><%= link_to 'Edit Page', edit_page_path(page), :class =>'text-danger' %>  |
+                    <%= link_to 'Delete Page', confirm_delete_page_path(page), :class =>'text-danger' %></p>
+                <% end %>
+                
+            </div>
+        </div>
+    <% end %>
 </div>
-<% end %>
-</ul>
 
-<h3>Create a new Page</h3>
+<h5>Add a new page</h5>
 <form action='/pages/create' method='post'>
 <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
 <input type = 'hidden' name ="page[user_id]" value ='<%= @user.id %>'>
 Page Name: <input type = 'text' name ="page[name]">
-Type of Page <select name="page[genre]">
-<option value='Recipe_Chapter'>Recipe Only</option>
-<option value='Vacation'>Vacation</option>
-<option value='Misc'>Other</option>
-</select>
 Description: <input type ='text' name ="page[description]">
-<input type ='submit' value="CREATE PAGE">
+<input type ='submit' class='btn btn-primary' value="Add">
 </form>

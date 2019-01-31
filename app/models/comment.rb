@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
+  validates :body, presence:true
   belongs_to :block
-  validates :user, :body, presence:true
 
 end

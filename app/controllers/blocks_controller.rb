@@ -27,11 +27,9 @@ class BlocksController < ApplicationController
       p params
       x=(@block.pages.ids).map! { |i| i.to_i }
       y=params[:block]['page_id'].map! { |i| i.to_i }
-      p x,y, "BBBBBBBBBBBBBBBBBBBBBBBBBBRAYS"
       z= x & y
       secondx=x-z
       secondy=y-z
-      p x,y,z,secondx,secondy,'AAAAAAAAAAAAAAAAAAAAAAAAARAYS'
       secondx.each do |i|
         Display.where("block_id = ? AND page_id = ?",@block.id, i).take.delete
       end
@@ -73,15 +71,24 @@ class BlocksController < ApplicationController
   end
 
   def createcomment
+    session[:return_to] = request.referer
     @comment =Comment.new(params.require(:comment).permit(:body))
     @block=Block.find(params[:comment]['block_id'])
     @comment.block=@block
     @comment.user=current_user if current_user.id.to_s==params[:comment]['user_id']
     @comment.save
     flash[:notice] = @comment.errors.messages
-    redirect_to show_block_path(@block)
+    redirect_to session.delete(:return_to)
   end
 
   def destroycomment
+    session[:return_to] = request.referer
+    @comment=Comment.find(params[:comment]['id'])
+    if @comment.user==current_user
+      @comment.delete
+      redirect_to session.delete(:return_to)
+    else
+      redirect_to session.delete(:return_to)
+    end
   end
 end

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   root 'users#new'
   get '/login', :to => 'users#new', as:'login'
   post '/login', :to => 'sessions#create'
@@ -14,10 +13,11 @@ Rails.application.routes.draw do
   post 'pages/:id/edit' => 'pages#update', as:'update_page'
   get 'pages/:id/delete' => 'pages#confirmdelete', as:'confirm_delete_page'
   post 'pages/:id/delete' => 'pages#destroy', as:'delete_page'
+  get 'pages/', :to => 'pages#index'
 
-  get 'users/:id' => 'users#show'
-  get 'users/:id/edit' => 'users#edit'
-  post 'users/create' => 'users#create'
+  get 'users/:id' => 'users#show', as: 'show_user'
+  get 'users/:id/edit' => 'users#edit', as: 'edit_user'
+  post 'users/create' => 'users#create', as: 'create_user'
 
   get 'blocks/new' => 'blocks#new', as:'new_block'
   post 'blocks/create' => 'blocks#create', as:'create_block'
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   post 'blocks/:id/edit' => 'blocks#update', as:'update_block'
   get 'blocks/:id/delete' => 'blocks#confirmdelete', as:'confirm_delete_block'
   post 'blocks/:id/delete' => 'blocks#destroy', as:'delete_block'
-  delete 'blocks/:id' => 'blocks#destroycomment', as:'delete_comment'
+  delete 'comments/delete' => 'blocks#destroycomment', as:'delete_comment'
 
   post 'comments/create' => 'blocks#createcomment', as:'create_comment'
 

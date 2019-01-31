@@ -1,9 +1,8 @@
 class Block < ActiveRecord::Base
   belongs_to :user
-  has_many:displays
-  has_many:pages, through: :displays
+  validates :description, :name, presence:true
   has_many:comments
-  validates :name, :description, :kind, presence:true
-  validates :name, uniqueness:true
+  has_many:pages, through: :displays
+  has_many:displays
 
 end
