@@ -28,7 +28,7 @@
 </div>
 
 <h5>Add a new page</h5>
-<form action='/pages/create' method='post'>
+<form action="<%= create_path_path %>" method='post'>
 <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
 <input type = 'hidden' name ="page[user_id]" value ='<%= @user.id %>'>
 Page Name: <input type = 'text' name ="page[name]">

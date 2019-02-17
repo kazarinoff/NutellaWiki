@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     if current_user
       return self
     else
-      redirect_to "/login/" and return
+      redirect_to login_path and return
     end
   end
 end

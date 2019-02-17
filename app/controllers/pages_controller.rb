@@ -2,7 +2,6 @@ class PagesController < ApplicationController
   def index
     @pages=Page.all.includes(:blocks)
     @user=current_user
-    puts ENV['MAIL_HOST'],'########################'
   end
 
   def show
@@ -48,7 +47,7 @@ class PagesController < ApplicationController
     @page=Page.find(params['id'])
     if @page.user==current_user
       @page.delete
-      redirect_to pages_index_path
+      redirect_to pages_index_path and return
     else
       redirect_to show_page_path(@page)
     end

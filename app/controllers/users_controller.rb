@@ -29,7 +29,6 @@ class UsersController < ApplicationController
   def edit
     redirect_to edit_user_path(current_user) and return if params['id']!=current_user.id.to_s
     @user = current_user
-
   end
 
   def update

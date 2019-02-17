@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/login', :to => 'users#new', as:'login'
   post '/login', :to => 'sessions#create'
   get '/logout' => 'sessions#destroy', as:'logout'
-  post '/sessions/new' =>'sessions#create'
+  post '/sessions/new' =>'sessions#create', as: 'new_session'
   
   get 'pages/index', as:'pages_index'
   get 'pages/new', as:'new_page'

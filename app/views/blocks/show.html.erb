@@ -19,7 +19,7 @@
                     <p class='text-muted card-header'><%= (comment.created_at).strftime("%m/%d/%Y") %>: <%= comment.user.name %> said</p>
                     <p class='card-body'><%= comment.body %></p>
                     <% if (comment.user==current_user) %>
-                        <form method='post' action='/comments/delete/'>
+                        <form method='post' action="<%= delete_comment_path %>">
                             <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
                             <input type = 'hidden' name ='_method' value='DELETE'>
                             <input type = 'hidden' name ='comment[id]' value='<%= comment.id %>'>
@@ -29,7 +29,7 @@
                 </div>
             <% end %>
         <% end %>
-        <form action='/comments/create' method='post'>
+        <form action="<%= create_comment_path %>" method='post'>
             <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
             <input type = 'hidden' name ="comment[user_id]" value ='<%= current_user.id %>'>
             <input type = 'hidden' name ="comment[block_id]" value ='<%= @block.id %>'>

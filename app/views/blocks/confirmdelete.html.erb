@@ -2,4 +2,4 @@
 <form method='post' action:''>
 <input type = 'hidden' name = "authenticity_token" value = "<%=form_authenticity_token%>">
 <input type='submit' value='YES'>
-<button onclick="/blocks/@block.id">NO</button>
+<%= button_to "NO", show_block_path(@block), :method => "get" %>

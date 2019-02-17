@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   end
   def new
     if session[:user_id] 
-      redirect_to 'pages_index_path'
+      redirect_to pages_index_path and return
     end
   end
   def create
@@ -24,6 +24,6 @@ class SessionsController < ApplicationController
   end
   def destroy
     session[:user_id]=nil
-    redirect_to login_path
+    redirect_to login_path and return
   end
 end
